@@ -63,9 +63,14 @@ const reportPath = join(OUT_DIR, 'entry.json');
 writeFileSync(reportPath, `${JSON.stringify(report, null, 2)}\n`, { mode: 0o644 });
 const photoPath = join(OUT_DIR, 'card.png');
 copyFileSync(PHOTO, photoPath);
+// Like the kit's starter, POST.json itself goes to /output too, where
+// the gate reads it.
+const postOutPath = join(OUT_DIR, 'POST.json');
+copyFileSync(POST_JSON, postOutPath);
 // The grader collects /output as another user, so outputs must be
 // world-readable whatever the umask is (writeFileSync's mode is masked
 // by it, and copyFileSync keeps the source's mode).
 chmodSync(reportPath, 0o644);
 chmodSync(photoPath, 0o644);
+chmodSync(postOutPath, 0o644);
 console.log(`wrote ${reportPath}`);
